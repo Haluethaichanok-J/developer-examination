@@ -13,6 +13,7 @@ const InputForm = ({
       <div className="containerForm">
         <form onSubmit={handleSubmit}>
           <div className="first-container">
+            <label htmlFor="name">Name</label>
             <input
               type="text"
               placeholder="name"
@@ -21,6 +22,7 @@ const InputForm = ({
               value={formValue.name}
               required
             />
+            <label htmlFor="price">Price</label>
             <input
               type="number"
               placeholder="price"
@@ -35,7 +37,7 @@ const InputForm = ({
               }}
               required
             />
-
+            <label htmlFor="quantity">Quantity</label>
             <input
               id="num"
               type="number"
@@ -51,7 +53,7 @@ const InputForm = ({
               }}
               required
             />
-
+            <label htmlFor="description">Description</label>
             <textarea
               type="text"
               placeholder="description"

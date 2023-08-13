@@ -16,7 +16,7 @@ function App() {
   const [openInsert, setOpenInsert] = useState(false);
   //informations collect fetchData
   const [informations, setInformations] = useState([]);
-  //informEdit collect fetch data id
+  //informEdit collect fetch data item id
   const [informEdit, setInformEdit] = useState([]);
   //Function to handle change in input
   const handleChange = (e) => {
@@ -42,7 +42,6 @@ function App() {
     e.preventDefault();
     const error = validate(formValue);
     if (!error) {
-      console.log(formValue);
       try {
         const response = await axios.post(
           "http://localhost:3000/insert_item",
@@ -61,7 +60,6 @@ function App() {
     try {
       const response = await axios.get("http://localhost:3000/get_item");
       setInformations(response.data.data);
-      console.log("informations:", response.data);
     } catch (err) {
       console.log(err);
     }
@@ -85,7 +83,6 @@ function App() {
         `http://localhost:3000/get_item_by_id/${id}`
       );
       setInformEdit(response.data.data);
-      console.log("informedit:", response.data.data);
     } catch (err) {
       console.log(err);
     }
@@ -96,16 +93,15 @@ function App() {
     const { name, value } = e.target;
     setInformEdit({ ...informEdit, [name]: value });
   };
-  console.log(informEdit);
+
   //Function handle submit edit form
   const handleSubmitEdit = async (e) => {
     e.preventDefault();
     const error = validate(informEdit);
     if (!error) {
-      console.log(informEdit._id);
       try {
         const id = informEdit._id;
-        console.log(id);
+
         const response = await axios.post(
           `http://localhost:3000/update_item/${id}`,
           informEdit

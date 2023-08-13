@@ -6,13 +6,12 @@ const EditForm = ({
   handleEdit,
   handleSubmitEdit,
 }) => {
-  console.log(informEdit);
   return (
     <div className="editForm-Container">
       <div className="editForm">
         <div className="container-form">
-          <label htmlFor="name">Name</label>
           <input type="text" name="id" value={informEdit._id} hidden />
+          <label htmlFor="name">Name</label>
           <input
             type="text"
             placeholder="name"
