@@ -30,6 +30,7 @@ const InputForm = ({
               name="price"
               value={formValue.price}
               min="0"
+              step="0.01"
               onKeyDown={(e) => {
                 if (e.key === "-") {
                   e.preventDefault();
@@ -47,7 +48,7 @@ const InputForm = ({
               value={formValue.quantity}
               min="0"
               onKeyDown={(e) => {
-                if (e.key === "-") {
+                if (e.key === "-" || e.key === ".") {
                   e.preventDefault();
                 }
               }}

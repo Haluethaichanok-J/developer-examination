@@ -49,6 +49,12 @@ function App() {
         );
         fetchData();
         closeWinInsert();
+        setFormValue({
+          name: "",
+          price: null,
+          quantity: null,
+          description: "",
+        });
       } catch (err) {
         console.log(err);
       }
@@ -75,6 +81,12 @@ function App() {
   //Function close window for inserting data
   const closeWinInsert = (e) => {
     setOpenInsert(false);
+    setFormValue({
+      name: "",
+      price: null,
+      quantity: null,
+      description: "",
+    });
   };
   //Function fetch data by id
   const fetchDataId = async (id) => {
