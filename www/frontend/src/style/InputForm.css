@@ -1,4 +1,5 @@
 .insertForm-Container {
+  top: 0%;
   display: flex;
   box-sizing: border-box;
   justify-content: center;
@@ -52,18 +53,17 @@
   height: 100%;
 }
 .create-btn {
-  margin-top: 10px;
-  height: 60%;
-  width: 30%;
+  height: 100%;
+  width: 50%;
   border-radius: 10px;
   background-color: blue;
   color: white;
   font-size: small;
   font-weight: 600;
   border: none;
+  padding: 6px;
 }
 .cancel-btn {
-  /* margin-top: 10px; */
   height: 100%;
   width: 50%;
   border-radius: 10px;
