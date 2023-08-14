@@ -1,11 +1,41 @@
 import React from "react";
+import axios from "axios";
 import "../style/editForm.css";
+import {
+  END_POINT_URL,
+  POST_ITEM_UPDATE_ENDPOINT,
+} from "../configs/endpoint.js";
 const EditForm = ({
-  closeWinEdit,
   informEdit,
-  handleEdit,
-  handleSubmitEdit,
+  closeForm,
+  setInformEdit,
+  validate,
+  fetchData,
 }) => {
+  // Function to handle the edit change
+  const handleEdit = (e) => {
+    const { name, value } = e.target;
+    setInformEdit({ ...informEdit, [name]: value });
+  };
+  //Function handle submit edit form
+  const handleSubmitEdit = async (e) => {
+    e.preventDefault();
+    const error = validate(informEdit);
+    if (!error) {
+      try {
+        const id = informEdit._id;
+
+        const response = await axios.post(
+          END_POINT_URL + POST_ITEM_UPDATE_ENDPOINT + `${id}`,
+          informEdit
+        );
+        fetchData();
+        closeForm();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
   return (
     <div className="editForm-Container">
       <div className="editForm">
@@ -64,11 +94,7 @@ const EditForm = ({
             />
             <div className="but">
               <button className="btn">SAVE</button>
-              <button
-                className="btn-cancel"
-                type="submit"
-                onClick={closeWinEdit}
-              >
+              <button className="btn-cancel" type="submit" onClick={closeForm}>
                 CANCEL
               </button>
             </div>

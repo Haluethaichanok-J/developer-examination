@@ -1,13 +1,42 @@
-import React, { useState } from "react";
+import React from "react";
 import "../style/inputForm.css";
+import axios from "axios";
+import {
+  END_POINT_URL,
+  POST_ITEM_INSERT_ENDPOINT,
+} from "../configs/endpoint.js";
 const InputForm = ({
   formValue,
-  handleChange,
-  handleSubmit,
-  closeWinInsert,
+  closeForm,
+  defaultValue,
+  setFormValue,
+  validate,
+  fetchData,
 }) => {
-  //set state
-
+  //Function to handle change in input
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValue({ ...formValue, [name]: value });
+  };
+  //Function to handle submit in input
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const error = validate(formValue);
+    console.log(error);
+    if (!error) {
+      try {
+        const response = await axios.post(
+          END_POINT_URL + POST_ITEM_INSERT_ENDPOINT,
+          formValue
+        );
+        fetchData();
+        closeForm();
+        setFormValue(defaultValue);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
   return (
     <div className="insertForm-Container">
       <div className="containerForm">
@@ -67,7 +96,7 @@ const InputForm = ({
               <button className="create-btn" type="submit">
                 CREATE
               </button>
-              <button className="cancel-btn" onClick={closeWinInsert}>
+              <button className="cancel-btn" onClick={closeForm}>
                 CANCEL
               </button>
             </div>
