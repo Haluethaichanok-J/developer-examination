@@ -5,6 +5,7 @@ import InputForm from "./components/InputForm";
 import axios from "axios";
 import EditForm from "./components/editForm";
 import { validate } from "./utilities/validateForm";
+import { openForm } from "./utilities/openForm";
 
 import {
   END_POINT_URL,
@@ -20,7 +21,7 @@ function App() {
     description: "",
   };
   const [formValue, setFormValue] = useState(defaultValue);
-  console.log(formValue);
+
   const [openEdit, setOpenEdit] = useState(false);
   const [openInsert, setOpenInsert] = useState(false);
   //informations collect fetchData
@@ -55,53 +56,46 @@ function App() {
     }
   };
 
-  //Function open form
-  const openForm = (e, id) => {
-    if (!id) {
-      setOpenInsert(true);
-      fetchDataId(id);
-    } else if (id) {
-      fetchDataId(id);
-      setOpenEdit(true);
-    }
-  };
-  //Function close form
-  const closeForm = (e) => {
-    setOpenEdit(false);
-    setOpenInsert(false);
-    setFormValue({
-      name: "",
-      price: null,
-      quantity: null,
-      description: "",
-    });
-  };
-
   return (
     <div className="all-container">
       <div className="add-btn">
-        <button onClick={openForm}>Add Item Data</button>
+        <button
+          onClick={() =>
+            openForm(null, setOpenInsert, fetchDataId, setOpenEdit)
+          }
+        >
+          Add Item Data
+        </button>
       </div>
       {/* if openInert is true open window for inputting */}
       {openInsert && (
         <InputForm
           formValue={formValue}
-          closeForm={closeForm}
           defaultValue={defaultValue}
           setFormValue={setFormValue}
           validate={validate}
           fetchData={fetchData}
+          setOpenEdit={setOpenEdit}
+          setOpenInsert={setOpenInsert}
         />
       )}
-      <Table openForm={openForm} informations={informations} />
+      <Table
+        informations={informations}
+        setOpenInsert={setOpenInsert}
+        fetchDataId={fetchDataId}
+        setOpenEdit={setOpenEdit}
+      />
       {/* if openEdit is true open window for editing */}
       {openEdit && (
         <EditForm
-          closeForm={closeForm}
           informEdit={informEdit}
           setInformEdit={setInformEdit}
           validate={validate}
           fetchData={fetchData}
+          setOpenEdit={setOpenEdit}
+          setOpenInsert={setOpenInsert}
+          setFormValue={setFormValue}
+          defaultValue={defaultValue}
         />
       )}
     </div>

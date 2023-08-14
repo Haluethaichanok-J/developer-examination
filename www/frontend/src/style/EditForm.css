@@ -80,8 +80,8 @@
   border: none;
   padding: 6px;
 }
-label {
-  font-size: small;
+.container-form label {
+  font-size: medium;
   text-align: left;
   width: 100%;
   height: 20%;

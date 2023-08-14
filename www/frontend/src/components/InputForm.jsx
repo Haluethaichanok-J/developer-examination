@@ -5,13 +5,15 @@ import {
   END_POINT_URL,
   POST_ITEM_INSERT_ENDPOINT,
 } from "../configs/endpoint.js";
+import { closeForm } from "../utilities/closeForm";
 const InputForm = ({
   formValue,
-  closeForm,
   defaultValue,
   setFormValue,
   validate,
   fetchData,
+  setOpenEdit,
+  setOpenInsert,
 }) => {
   //Function to handle change in input
   const handleChange = (e) => {
@@ -30,7 +32,7 @@ const InputForm = ({
           formValue
         );
         fetchData();
-        closeForm();
+        closeForm(setOpenEdit, setOpenInsert, setFormValue, defaultValue);
         setFormValue(defaultValue);
       } catch (err) {
         console.log(err);
@@ -96,7 +98,17 @@ const InputForm = ({
               <button className="create-btn" type="submit">
                 CREATE
               </button>
-              <button className="cancel-btn" onClick={closeForm}>
+              <button
+                className="cancel-btn"
+                onClick={() =>
+                  closeForm(
+                    setOpenEdit,
+                    setOpenInsert,
+                    setFormValue,
+                    defaultValue
+                  )
+                }
+              >
                 CANCEL
               </button>
             </div>

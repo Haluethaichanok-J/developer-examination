@@ -1,7 +1,7 @@
 import React from "react";
 import "../style/Table.css";
-
-const Table = ({ openForm, informations }) => {
+import { openForm } from "../utilities/openForm";
+const Table = ({ informations, setOpenInsert, fetchDataId, setOpenEdit }) => {
   return (
     <div className="containerTable">
       <table>
@@ -23,7 +23,10 @@ const Table = ({ openForm, informations }) => {
               <td className="action-container">
                 <button
                   className="action"
-                  onClick={(e) => openForm(e, data._id)}
+                  // onClick={(e) => openForm(e, data._id)}
+                  onClick={() =>
+                    openForm(data._id, setOpenInsert, fetchDataId, setOpenEdit)
+                  }
                 >
                   EDIT
                 </button>

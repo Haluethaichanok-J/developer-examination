@@ -5,12 +5,16 @@ import {
   END_POINT_URL,
   POST_ITEM_UPDATE_ENDPOINT,
 } from "../configs/endpoint.js";
+import { closeForm } from "../utilities/closeForm";
 const EditForm = ({
   informEdit,
-  closeForm,
   setInformEdit,
   validate,
   fetchData,
+  setOpenEdit,
+  setOpenInsert,
+  setFormValue,
+  defaultValue,
 }) => {
   // Function to handle the edit change
   const handleEdit = (e) => {
@@ -30,7 +34,7 @@ const EditForm = ({
           informEdit
         );
         fetchData();
-        closeForm();
+        closeForm(setOpenEdit, setOpenInsert, setFormValue, defaultValue);
       } catch (err) {
         console.log(err);
       }
@@ -94,7 +98,18 @@ const EditForm = ({
             />
             <div className="but">
               <button className="btn">SAVE</button>
-              <button className="btn-cancel" type="submit" onClick={closeForm}>
+              <button
+                className="btn-cancel"
+                type="submit"
+                onClick={() =>
+                  closeForm(
+                    setOpenEdit,
+                    setOpenInsert,
+                    setFormValue,
+                    defaultValue
+                  )
+                }
+              >
                 CANCEL
               </button>
             </div>
