@@ -1,9 +1,9 @@
-import UserModel from "../models/Users.js";
+import ItemModel from "../models/Items.js";
 // Controller function to get all items
 export const getAllItem = async (req, res) => {
   try {
     // Fetch all item data
-    const inform = await UserModel.find();
+    const inform = await ItemModel.find();
     if (!inform || inform.length === 0) {
       return res.status(404).json({
         status: 404,
@@ -29,7 +29,7 @@ export const getItem = async (req, res) => {
 
   try {
     // Find item by ID
-    const item = await UserModel.findById(itemId);
+    const item = await ItemModel.findById(itemId);
     if (!item) {
       return res.status(404).json({
         status: 404,
@@ -62,7 +62,7 @@ export const insertItem = async (req, res) => {
     //convert price and quantity to number
     const price = Number(inputPrice);
     const quantity = Number(inputQuantity);
-    const user = new UserModel({
+    const user = new ItemModel({
       name: name,
       price: price,
       quantity: quantity,
@@ -94,7 +94,7 @@ export const updateItem = async (req, res) => {
     //convert price and quantity to number
     const price = Number(inputPrice);
     const quantity = Number(inputQuantity);
-    const user = await UserModel.findByIdAndUpdate(itemId, {
+    const user = await ItemModel.findByIdAndUpdate(itemId, {
       name: name,
       price: price,
       quantity: quantity,

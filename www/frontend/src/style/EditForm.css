@@ -1,3 +1,10 @@
+/* Define the color values */
+:root {
+  --bgbuttonsave: blue;
+  --bgbuttoncancel: red;
+  --bgbehindeditform: rgba(0, 0, 0, 0.7);
+  --bgeditform: white;
+}
 .editForm-Container {
   top: 0%;
   display: flex;
@@ -8,12 +15,15 @@
   width: 100%;
   height: 100%;
   z-index: 1;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: var(--bgbehindeditform);
 }
 .editForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 30%;
   height: 55%;
-  background-color: white;
+  background-color: var(--bgeditform);
   border-radius: 5%;
   z-index: 2;
 }
@@ -36,34 +46,39 @@
   margin-top: 10px;
   padding-left: 5px;
 }
+
 .but {
   display: flex;
   justify-content: center;
   gap: 10px;
   width: 100%;
   height: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .btn {
   margin-top: 10px;
-  height: 60%;
+  height: 100%;
   width: 30%;
   border-radius: 10px;
-  background-color: blue;
+  background-color: var(--bgbuttonsave);
   color: white;
   font-size: small;
   font-weight: 600;
   border: none;
+  padding: 6px;
 }
 .btn-cancel {
   margin-top: 10px;
-  height: 60%;
+  height: 100%;
   width: 30%;
   border-radius: 10px;
-  background-color: red;
+  background-color: var(--bgbuttoncancel);
   color: white;
   font-size: small;
   font-weight: 600;
   border: none;
+  padding: 6px;
 }
 label {
   font-size: small;

@@ -1,3 +1,9 @@
+/* Define the color values */
+:root {
+  --bghome: rgb(200, 240, 240);
+  --bgbuttoninsert: yellow;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -12,7 +18,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 100px; /* Add margin at the bottom of the page */
+  padding-bottom: 100px;
+  background-color: var(--bghome);
 }
 .add-btn {
   display: flex;
@@ -24,7 +31,7 @@
   font-size: larger;
   width: 30%;
   height: 100%;
-  background-color: yellow;
+  background-color: var(--bgbuttoninsert);
   font-weight: 600;
   padding: 6px;
   border-radius: 5px;

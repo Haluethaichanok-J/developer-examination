@@ -4,6 +4,7 @@ import Table from "./components/Table";
 import InputForm from "./components/InputForm";
 import axios from "axios";
 import EditForm from "./components/editForm";
+import { validate } from "./utilities/validateForm";
 function App() {
   //set state
   const [formValue, setFormValue] = useState({
@@ -23,24 +24,12 @@ function App() {
     const { name, value } = e.target;
     setFormValue({ ...formValue, [name]: value });
   };
-  console.log(formValue);
 
-  //Function validation
-  const validate = (values) => {
-    let er = "";
-    if (
-      !values.name ||
-      !values.price ||
-      !values.quantity ||
-      !values.description
-    ) {
-      return (er = "Please fill out this form.");
-    }
-  };
   //Function to handle submit in input
   const handleSubmit = async (e) => {
     e.preventDefault();
     const error = validate(formValue);
+    console.log(error);
     if (!error) {
       try {
         const response = await axios.post(

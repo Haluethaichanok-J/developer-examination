@@ -1,7 +1,14 @@
+/* Define the color values */
+:root {
+  --bgheadtable: rgb(90, 169, 168);
+  --bgbodytablestart: rgb(227, 212, 107);
+  --bgbodytableend: rgb(151, 216, 199);
+  --hoverrowtable: rgba(108, 141, 192, 0.5);
+}
+/* table */
 thead {
   font-size: large;
-  /* background-color: #dddddd; */
-  background-color: black;
+  background-color: var(--bgheadtable);
   color: white;
 }
 .containerTable {
@@ -11,25 +18,31 @@ thead {
   width: 100%;
   height: 100%;
 }
-table {
+.containerTable table {
   width: 90%;
   height: 10px;
 }
-table,
+.containerTable table,
 th,
 td {
   padding: 6px;
-  /* border: 1px solid gray; */
   border: none;
   border-collapse: collapse;
 }
-tbody tr:nth-child(even) {
-  background-color: #eee;
+.containerTable tbody {
+  background-image: linear-gradient(
+    to left,
+    var(--bgbodytablestart),
+    var(--bgbodytableend)
+  );
 }
-td {
+.containerTable tbody tr:nth-child(even) {
+  background-color: rgba(225, 225, 225, 0.4);
+}
+.containerTable td {
   padding-left: 10px;
 }
-
+/* container button and buttons */
 .action-container {
   text-align: center;
   height: 100%;
@@ -45,4 +58,9 @@ td {
   border: none;
   padding: 2px;
   border-radius: 5px;
+}
+/* hover row in table */
+.containerTable tbody tr:nth-child(even):hover,
+tbody tr:nth-child(odd):hover {
+  background-color: var(--hoverrowtable);
 }

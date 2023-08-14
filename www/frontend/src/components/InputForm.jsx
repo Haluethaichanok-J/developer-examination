@@ -12,7 +12,7 @@ const InputForm = ({
     <div className="insertForm-Container">
       <div className="containerForm">
         <form onSubmit={handleSubmit}>
-          <div className="first-container">
+          <div className="input-container">
             <label htmlFor="name">Name</label>
             <input
               type="text"
