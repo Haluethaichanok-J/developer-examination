@@ -5,70 +5,69 @@ import InputForm from "./components/InputForm";
 import axios from "axios";
 import EditForm from "./components/editForm";
 import { validate } from "./utilities/validateForm";
+
+import {
+  END_POINT_URL,
+  GET_ITEM_ENDPOINT,
+  GET_ITEM_ID_ENDPOINT,
+} from "./configs/endpoint.js";
 function App() {
   //set state
-  const [formValue, setFormValue] = useState({
+  const defaultValue = {
     name: "",
     price: null,
     quantity: null,
     description: "",
-  });
+  };
+  const [formValue, setFormValue] = useState(defaultValue);
+  console.log(formValue);
   const [openEdit, setOpenEdit] = useState(false);
   const [openInsert, setOpenInsert] = useState(false);
   //informations collect fetchData
   const [informations, setInformations] = useState([]);
   //informEdit collect fetch data item id
   const [informEdit, setInformEdit] = useState([]);
-  //Function to handle change in input
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValue({ ...formValue, [name]: value });
-  };
 
-  //Function to handle submit in input
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const error = validate(formValue);
-    console.log(error);
-    if (!error) {
+  //Function fetch data
+  const fetchData = async () => {
+    if (!informations.id) {
       try {
-        const response = await axios.post(
-          "http://localhost:3000/insert_item",
-          formValue
-        );
-        fetchData();
-        closeWinInsert();
-        setFormValue({
-          name: "",
-          price: null,
-          quantity: null,
-          description: "",
-        });
+        const response = await axios.get(END_POINT_URL + GET_ITEM_ENDPOINT);
+        setInformations(response.data.data);
       } catch (err) {
         console.log(err);
       }
     }
   };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  //Function fetch data
-  const fetchData = async () => {
+  //Function fetch data by id
+  const fetchDataId = async (id) => {
     try {
-      const response = await axios.get("http://localhost:3000/get_item");
-      setInformations(response.data.data);
+      const response = await axios.get(
+        END_POINT_URL + GET_ITEM_ID_ENDPOINT + `${id}`
+      );
+      setInformEdit(response.data.data);
     } catch (err) {
       console.log(err);
     }
   };
-  useEffect(() => {
-    fetchData();
-  }, []);
-  //Function open window for inserting data
-  const openWinInsert = (e, id) => {
-    setOpenInsert(true);
-    fetchDataId(id);
+
+  //Function open form
+  const openForm = (e, id) => {
+    if (!id) {
+      setOpenInsert(true);
+      fetchDataId(id);
+    } else if (id) {
+      fetchDataId(id);
+      setOpenEdit(true);
+    }
   };
-  //Function close window for inserting data
-  const closeWinInsert = (e) => {
+  //Function close form
+  const closeForm = (e) => {
+    setOpenEdit(false);
     setOpenInsert(false);
     setFormValue({
       name: "",
@@ -77,75 +76,32 @@ function App() {
       description: "",
     });
   };
-  //Function fetch data by id
-  const fetchDataId = async (id) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3000/get_item_by_id/${id}`
-      );
-      setInformEdit(response.data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  // Function to handle the edit change
-  const handleEdit = (e) => {
-    // const { _id, name, price, quantity, description, value } = e.target;
-    const { name, value } = e.target;
-    setInformEdit({ ...informEdit, [name]: value });
-  };
-
-  //Function handle submit edit form
-  const handleSubmitEdit = async (e) => {
-    e.preventDefault();
-    const error = validate(informEdit);
-    if (!error) {
-      try {
-        const id = informEdit._id;
-
-        const response = await axios.post(
-          `http://localhost:3000/update_item/${id}`,
-          informEdit
-        );
-        fetchData();
-        closeWinEdit();
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
-  //Function open window for editing data
-  const openWinEdit = (e, id) => {
-    fetchDataId(id);
-    setOpenEdit(true);
-  };
-  //Function close window for editing data
-  const closeWinEdit = (e) => {
-    setOpenEdit(false);
-  };
 
   return (
     <div className="all-container">
       <div className="add-btn">
-        <button onClick={openWinInsert}>Add Item Data</button>
+        <button onClick={openForm}>Add Item Data</button>
       </div>
       {/* if openInert is true open window for inputting */}
       {openInsert && (
         <InputForm
           formValue={formValue}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-          closeWinInsert={closeWinInsert}
+          closeForm={closeForm}
+          defaultValue={defaultValue}
+          setFormValue={setFormValue}
+          validate={validate}
+          fetchData={fetchData}
         />
       )}
-      <Table openWinEdit={openWinEdit} informations={informations} />
+      <Table openForm={openForm} informations={informations} />
       {/* if openEdit is true open window for editing */}
       {openEdit && (
         <EditForm
-          closeWinEdit={closeWinEdit}
-          handleEdit={handleEdit}
+          closeForm={closeForm}
           informEdit={informEdit}
-          handleSubmitEdit={handleSubmitEdit}
+          setInformEdit={setInformEdit}
+          validate={validate}
+          fetchData={fetchData}
         />
       )}
     </div>
